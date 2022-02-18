@@ -1,7 +1,7 @@
 // Taskinator
 
-// assigning button object representation to a variable
-var buttonEl = document.querySelector("#save-task");
+// we are assigning the element with id task-form to this variable 'formEl'
+var formEl = document.querySelector("#task-form");
 
 // we create DOM element object for <ul>, referencing its id for specificity
 var tasksToDoEl = document.querySelector ("#tasks-to-do");
@@ -12,7 +12,12 @@ give the <li> a class name so its styling will come through,
 dictate the text within the <li>,
 attach the <li> as a child element to the <ul> */
 
-var createTaskHandler = function () {
+
+// we put 'event' as a parameter so we can stop the browser's default action
+var createTaskHandler = function (event) {
+    // this will prevent default action of browser refreshing page on submit
+    event.preventDefault();
+
     var listItemEl = document.createElement ("li");
     listItemEl.className = "task-item";
     listItemEl.textContent = "This is a new task.";
@@ -21,6 +26,6 @@ var createTaskHandler = function () {
 
 
 // we are passing two arguments to the addEventListener function
-// first function is listening for a click
+// first function is listening for a 'submit' to the form
 // second function is the one we created, createTaskHandler
-buttonEl.addEventListener("click", createTaskHandler);
+formEl.addEventListener("submit", createTaskHandler);
