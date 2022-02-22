@@ -20,6 +20,16 @@ var taskFormHandler = function (event) {
     // this expression does the same except for task-type value under <select>
     var taskTypeInput = document.querySelector("select[name='task-type']").value;
     
+    // this expression will ensure inputs are not blank
+    if (!taskNameInput || !taskTypeInput) {
+        alert("Fields cannot be empty!");
+        return false;
+    }
+
+    // this expression clears form fields
+    formEl.reset();
+
+
     // package data as object
     var taskDataObj = {
         name: taskNameInput,
@@ -53,7 +63,7 @@ var createTaskEl = function (taskDataObj) {
     
     // adds task info div to <li> element
     listItemEl.appendChild(taskInfoEl);
-    
+     
     // adds list item to <ul> element
     tasksToDoEl.appendChild(listItemEl);
 };
