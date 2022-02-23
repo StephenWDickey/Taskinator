@@ -292,6 +292,28 @@ var saveTasks = function () {
 
 ////////////////////////////////////////////////////////////////////
 
+var loadTasks = function () {
+    var savedTasks = localStorage.getItem("tasks");
+    // if no tasks, exit the function
+    if (!savedTasks) {
+        return false;
+    }
+    
+    // parse string into an array
+    savedTasks = JSON.parse(savedTasks);
+
+    // for loop for savedTasks array
+    for (var i = 0; i < savedTasks.length; i++) {
+        // pass savedTasks through createTaskEl function to display
+        createTaskEl(savedTasks[i]);
+    }
+};
+
+
+
+
+//////////////////////////////////////////////////////////////
+
 // we are passing two arguments to the addEventListener function
 // first function is listening for a 'submit' to the form
 // second function is the one we created, taskFormHandler
