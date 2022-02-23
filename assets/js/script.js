@@ -1,5 +1,9 @@
 // Taskinator
 
+// we will create an array of objects so data can be stored in localStorage
+var tasks = [];
+
+
 // adds reference to main element
 var pageContentEl = document.querySelector("#page-content");
 
@@ -50,6 +54,7 @@ var taskFormHandler = function (event) {
     else {
         // package data as object
         var taskDataObj = {
+            status: "to do",
             name: taskNameInput,
             type: taskTypeInput
         };
@@ -96,6 +101,11 @@ var createTaskEl = function (taskDataObj) {
 
     // adds list item to <ul> element
     tasksToDoEl.appendChild(listItemEl);
+
+    // these expressions assign an id to taskDataObj
+    taskDataObj.id = taskIdCounter;
+    // push adds content in parentheses to the array
+    tasks.push(taskDataObj);
 
     // increases counter by 1 for each task
     taskIdCounter++;
@@ -159,6 +169,14 @@ var completeEditTask = function(taskName, taskType, taskId) {
     taskSelected.querySelector("h3.task-name").textContent = taskName;
     taskSelected.querySelector("span.task-type").textContent = taskType;
 
+    // loop through tasks array and task object with new content
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].name = taskName;
+            tasks[i].type = taskType;
+        }
+    };
+
     alert("Task updated.");
 
     formEl.removeAttribute("data-task-id");
@@ -202,6 +220,12 @@ var taskStatusChangeHandler = function(event) {
     else if(statusValue === "completed") {
         tasksCompletedEl.appendChild(taskSelected);
     }
+    // update tasks in tasks array
+    for (var i=0; i < tasks.length; i++) {
+        if (tasks[i].id === parseInt(taskId)) {
+            tasks[i].status = statusValue;
+        }
+    };
 };
 
 
@@ -225,6 +249,19 @@ var editTask = function(taskId) {
 var deleteTask = function(taskId) {
     var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
     taskSelected.remove();
+
+    // creates new array to hold updated list of tasks
+    var updatedTaskArr = [];
+
+    // loop through current tasks
+    for (var i = 0; i < tasks.length; i++) {
+        if (tasks[i].id !== parseInt(taskId)) {
+            updatedTaskArr.push(tasks[i]);
+        }
+    };
+
+    // reassign tasks array to be same as updatedTaskArr
+    tasks = updatedTaskArr;
 };
 
 
